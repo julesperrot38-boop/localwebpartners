@@ -6,10 +6,8 @@ import portfolioAurora from "@/assets/portfolio-aurora.png";
 import portfolioDuckeBarber from "@/assets/portfolio-ducke-barber.png";
 import portfolioEclipse from "@/assets/portfolio-eclipse.png";
 import portfolioFitnessSquad from "@/assets/portfolio-fitness-squad.png";
-const portfolioTikobanAsset = { url: "/images/portfolio-tikoban.jpeg" };
 import logoLw from "@/assets/logo-lw.png";
 
-const portfolioTikoban = portfolioTikobanAsset.url;
 
 const SITES = [
   {
@@ -19,14 +17,6 @@ const SITES = [
     favicon: "✂️",
     image: portfolioDuckeBarber,
     accent: "#1e3a8a",
-  },
-  {
-    id: "tikoban",
-    url: "tikoban.com",
-    label: "Ti Koban — Food truck",
-    favicon: "🍕",
-    image: portfolioTikoban,
-    accent: "#2d5016",
   },
   {
     id: "aurore",

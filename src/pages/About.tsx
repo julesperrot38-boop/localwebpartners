@@ -5,7 +5,7 @@ import {
   Phone, Calendar
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-const webDesignerAsset = { url: '/images/web-designer.jpeg' };
+const webDesignerAsset = { url: '/images/web-designer.webp' };
 const webDesignerPhoto = webDesignerAsset.url;
 import businessDevPhoto from '@/assets/business-developer.png';
 import Navbar from '@/components/Navbar';

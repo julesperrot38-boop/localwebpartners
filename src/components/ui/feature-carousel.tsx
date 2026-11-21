@@ -7,7 +7,6 @@ import {
   ScissorIcon,
   DrinkIcon,
   Dumbbell01Icon,
-  Pizza01Icon,
 } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -16,9 +15,7 @@ import portfolioAurora from "@/assets/portfolio-aurora.png";
 import portfolioDuckeBarber from "@/assets/portfolio-ducke-barber.png";
 import portfolioEclipse from "@/assets/portfolio-eclipse.png";
 import portfolioFitnessSquad from "@/assets/portfolio-fitness-squad.png";
-const portfolioTikobanAsset = { url: "/images/portfolio-tikoban.jpeg" };
 
-const portfolioTikoban = portfolioTikobanAsset.url;
 
 const FEATURES = [
   {
@@ -28,14 +25,6 @@ const FEATURES = [
     icon: ScissorIcon,
     image: portfolioDuckeBarber,
     description: "Identité web moderne et prise de RDV en ligne pour un barbier urbain.",
-  },
-  {
-    id: "tikoban",
-    label: "Ti Koban",
-    sublabel: "Food truck",
-    icon: Pizza01Icon,
-    image: portfolioTikoban,
-    description: "Site vitrine appétissant pour un food truck de pizzas artisanale en Bretagne.",
   },
   {
     id: "aurore",

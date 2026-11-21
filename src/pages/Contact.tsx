@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
 import { useTranslation } from '@/contexts/LanguageContext';
-const webDesignerAsset = { url: '/images/web-designer.jpeg' };
+const webDesignerAsset = { url: '/images/web-designer.webp' };
 const webDesignerPhoto = webDesignerAsset.url;
 import businessDevPhoto from '@/assets/business-developer.png';
 
