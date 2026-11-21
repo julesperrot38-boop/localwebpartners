@@ -23,8 +23,8 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const services = [
-    t('contact', 'showcaseSite'), t('contact', 'logoCreation'), t('contact', 'professionalBlog'),
-    t('contact', 'interactivePortfolio'), t('contact', 'completeEcommerce'),
+    t('contact', 'showcaseSite'), t('contact', 'completeEcommerce'), t('contact', 'application'),
+    t('contact', 'logoCreation'),
     t('contact', 'maintenanceServices'), t('contact', 'otherRequest'),
   ];
 

@@ -13,7 +13,7 @@ interface ServiceSlide {
   card: WarpCard;
 }
 
-/* Une carte par prestation. Délais indicatifs : à ajuster si besoin. */
+/* Une carte par prestation, avec le délai moyen de livraison. */
 const SERVICES: ServiceSlide[] = [
   {
     id: "site-vitrine",
@@ -44,29 +44,29 @@ const SERVICES: ServiceSlide[] = [
     },
   },
   {
-    id: "portfolio",
-    name: "Portfolio",
+    id: "application",
+    name: "Application",
     card: {
-      title: "Portfolio\ninteractif",
-      value: "7",
-      unit: "jours",
+      title: "Application\nweb ou mobile",
+      value: "6",
+      unit: "semaines",
       footer: "Délai moyen de livraison",
-      image: "/images/hero/portfolio.webp",
-      alt: "Rendu d'un portfolio d'architecture affiché sur un ordinateur et une tablette.",
+      image: "/images/hero/application.webp",
+      alt: "Rendu d'une application mobile de réservation et de fidélité sur deux smartphones.",
       numeral: NUMERAL,
       glow: TEAL,
     },
   },
   {
-    id: "blog",
-    name: "Blog SEO",
+    id: "creation-logo",
+    name: "Identité visuelle",
     card: {
-      title: "Blog\noptimisé SEO",
-      value: "10",
+      title: "Identité visuelle\nlogo & charte",
+      value: "5",
       unit: "jours",
       footer: "Délai moyen de livraison",
-      image: "/images/hero/blog.webp",
-      alt: "Rendu d'un blog éditorial affiché sur un ordinateur portable dans un café.",
+      image: "/images/hero/identite.webp",
+      alt: "Rendu d'une identité visuelle turquoise déclinée sur cartes de visite, papeterie et smartphone.",
       numeral: NUMERAL,
       glow: TEAL,
     },
@@ -112,7 +112,7 @@ const ServicesHero = () => {
             Design
           </h1>
           <p className="mt-6 max-w-md text-base leading-relaxed md:text-lg" style={{ color: "hsl(var(--silver) / 0.72)" }}>
-            Sites vitrines, boutiques en ligne, portfolios et blogs sur-mesure pour les entreprises locales. Conçus pour être beaux, rapides et
+            Sites vitrines, boutiques en ligne, applications et identités visuelles sur-mesure pour les entreprises locales. Conçus pour être beaux, rapides et
             trouvés sur Google.
           </p>
 
@@ -140,7 +140,7 @@ const ServicesHero = () => {
           <dl className="mt-12 flex gap-10 font-mono text-[0.7rem] uppercase tracking-wider" style={{ color: "hsl(var(--silver) / 0.6)" }}>
             <div>
               <dt style={{ color: "hsl(var(--silver) / 0.45)" }}>Délai</dt>
-              <dd className="mt-1" style={{ color: "hsl(var(--silver))" }}>5 à 21 jours</dd>
+              <dd className="mt-1" style={{ color: "hsl(var(--silver))" }}>5 jours à 6 semaines</dd>
             </div>
             <div>
               <dt style={{ color: "hsl(var(--silver) / 0.45)" }}>Devis</dt>

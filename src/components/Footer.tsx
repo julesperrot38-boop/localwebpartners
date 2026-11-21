@@ -46,8 +46,8 @@ const Footer = () => {
             <ul className="space-y-2 text-sm" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
               <li>{t('footer', 'showcaseSite')}</li>
               <li>{t('footer', 'logoCreation')}</li>
-              <li>{t('footer', 'blogSeo')}</li>
-              <li>{t('footer', 'interactivePortfolio')}</li>
+              <li>{t('footer', 'application')}</li>
+              <li>{t('footer', 'maintenanceHosting')}</li>
               <li>{t('footer', 'ecommerce')}</li>
             </ul>
           </div>
