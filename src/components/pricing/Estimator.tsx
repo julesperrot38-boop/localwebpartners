@@ -6,6 +6,7 @@ import {
   PROJECT_OFFERS,
   LOGO_OFFERS,
   MAINTENANCE,
+  DEPOSIT_RATE,
   PRICING_UI,
   formatEuro,
   tr,
@@ -130,7 +131,6 @@ export default function Estimator({ state, onChange, onBook }: Props) {
             <Choice name="est-care" selected={state.care} onSelect={() => onChange({ ...state, care: true })} title={tr(PRICING_UI.careOn, language)} price={`${fmt(MAINTENANCE.pricePerMonth)} ${tr(PRICING_UI.perMonth, language)}`} />
             <Choice name="est-care" selected={!state.care} onSelect={() => onChange({ ...state, care: false })} title={tr(PRICING_UI.careOff, language)} price={fmt(0)} />
           </div>
-          <p className="mt-3 text-xs leading-relaxed" style={{ color: 'hsl(var(--silver) / 0.6)' }}>{tr(PRICING_UI.optionalNote, language)}</p>
         </fieldset>
       </div>
 
@@ -154,7 +154,7 @@ export default function Estimator({ state, onChange, onBook }: Props) {
         </div>
         {oneOff > 0 && (
           <div className="mt-1 text-xs" style={{ color: 'hsl(var(--silver) / 0.55)' }}>
-            {tr(PRICING_UI.deposit, language)} : {fmt(Math.round(oneOff * 0.4))}
+            {tr(PRICING_UI.deposit, language)} : {fmt(Math.round(oneOff * DEPOSIT_RATE))}
           </div>
         )}
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
-import { useInView, useSpring } from 'framer-motion';
-import { Check, ArrowRight } from 'lucide-react';
+import { AnimatePresence, motion, useInView, useSpring } from 'framer-motion';
+import { Check, ArrowRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from '@/contexts/LanguageContext';
 import { formatEuro, tr, PRICING_UI, type Offer } from '@/lib/pricing';
 
@@ -130,5 +130,79 @@ export function ChooseButton({ onClick, primary }: { onClick: () => void; primar
       {tr(PRICING_UI.choose, language)}
       <ArrowRight size={16} aria-hidden="true" />
     </button>
+  );
+}
+
+/** Feature list hidden behind a "What's included" toggle, to keep cards light. */
+export function IncludedToggle({ items, columns = 1 }: { items: Offer['features']; columns?: 1 | 2 }) {
+  const { language } = useTranslation();
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between py-1 text-sm font-medium transition-colors hover:text-[hsl(var(--accent-teal))]"
+        style={{ color: 'hsl(var(--silver) / 0.85)' }}
+      >
+        <span>
+          {open ? tr(PRICING_UI.hide, language) : tr(PRICING_UI.included, language)}
+          <span className="ml-2 font-mono text-xs" style={{ color: 'hsl(var(--silver) / 0.5)' }}>({items.length})</span>
+        </span>
+        <ChevronDown size={18} className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pt-3">
+              <FeatureList items={items} columns={columns} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/** Clean offer card: photo, name, price, one-line pitch, collapsible details, call to action. */
+export function OfferCard({ offer, onChoose, wide }: { offer: Offer; onChoose: () => void; wide?: boolean }) {
+  const { language } = useTranslation();
+  const name = tr(offer.name, language);
+  return (
+    <SpotlightCard highlight={offer.popular} className="!p-0">
+      {offer.image && (
+        <div className={`relative overflow-hidden ${wide ? 'aspect-[16/8]' : 'aspect-[16/10]'}`}>
+          <img
+            src={offer.image}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div aria-hidden="true" className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 45%, hsl(var(--bg-card)) 100%)' }} />
+          <span
+            className="absolute left-5 top-5 rounded-full px-3 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-[0.18em] backdrop-blur-md"
+            style={{ background: 'hsl(var(--bg-dark) / 0.6)', color: offer.popular ? 'hsl(var(--accent-teal))' : 'hsl(var(--silver))' }}
+          >
+            {name}
+          </span>
+        </div>
+      )}
+      <div className="flex flex-1 flex-col px-7 pb-7 pt-2">
+        <PriceLine offer={offer} />
+        <p className="mt-2 text-sm" style={{ color: 'hsl(var(--silver) / 0.7)' }}>{tr(offer.tagline, language)}</p>
+        <div className="my-5 h-px" style={{ background: 'hsl(0 0% 88% / 0.1)' }} />
+        <div className="mb-6">
+          <IncludedToggle items={offer.features} columns={wide ? 2 : 1} />
+        </div>
+        <ChooseButton primary={offer.popular} onClick={onChoose} />
+      </div>
+    </SpotlightCard>
   );
 }

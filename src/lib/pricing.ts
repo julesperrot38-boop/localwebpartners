@@ -13,6 +13,8 @@ export interface Offer {
   tagline: L10n;
   features: L10n[];
   popular?: boolean;
+  /** Illustration shown on the offer card. */
+  image?: string;
 }
 
 const l = (fr: string, en: string, es: string, de: string, mt: string): L10n => ({ fr, en, es, de, mt });
@@ -24,6 +26,7 @@ const l = (fr: string, en: string, es: string, de: string, mt: string): L10n => 
 export const VITRINE_OFFERS: Offer[] = [
   {
     id: 'vitrine-essentiel',
+    image: '/images/services/essentiel.webp',
     price: 599,
     name: l('Essentiel', 'Essential', 'Esencial', 'Essenziell', 'Essenzjali'),
     tagline: l(
@@ -43,6 +46,7 @@ export const VITRINE_OFFERS: Offer[] = [
   },
   {
     id: 'vitrine-pro',
+    image: '/images/hero/vitrine.webp',
     price: 799,
     popular: true,
     name: l('Pro', 'Pro', 'Pro', 'Pro', 'Pro'),
@@ -64,6 +68,7 @@ export const VITRINE_OFFERS: Offer[] = [
   },
   {
     id: 'vitrine-premium',
+    image: '/images/services/premium.webp',
     price: 1499,
     name: l('Premium', 'Premium', 'Premium', 'Premium', 'Premium'),
     tagline: l(
@@ -85,6 +90,7 @@ export const VITRINE_OFFERS: Offer[] = [
 
 export const ECOMMERCE_OFFER: Offer = {
   id: 'ecommerce',
+  image: '/images/hero/ecommerce.webp',
   price: 1999,
   name: l('Site e-commerce', 'E-commerce website', 'Tienda online', 'Onlineshop', 'Sit e-commerce'),
   tagline: l('Vendez vos produits 24h/24.', 'Sell your products 24/7.', 'Vende tus productos 24 h al día.', 'Verkaufen Sie Ihre Produkte rund um die Uhr.', 'Biegħ il-prodotti tiegħek 24 siegħa kuljum.'),
@@ -100,6 +106,7 @@ export const ECOMMERCE_OFFER: Offer = {
 
 export const APPLICATION_OFFER: Offer = {
   id: 'application',
+  image: '/images/hero/application.webp',
   price: 2999,
   from: true,
   name: l('Application', 'App', 'Aplicación', 'App', 'Applikazzjoni'),
@@ -118,6 +125,7 @@ export const APPLICATION_OFFER: Offer = {
 export const LOGO_OFFERS: Offer[] = [
   {
     id: 'logo',
+    image: '/images/services/logo.webp',
     price: 30,
     name: l('Création de logo', 'Logo design', 'Creación de logo', 'Logo-Design', 'Ħolqien ta\' logo'),
     tagline: l('Un logo simple et efficace.', 'A simple, effective logo.', 'Un logo sencillo y eficaz.', 'Ein einfaches, wirkungsvolles Logo.', 'Logo sempliċi u effettiv.'),
@@ -130,6 +138,7 @@ export const LOGO_OFFERS: Offer[] = [
   },
   {
     id: 'identite-visuelle',
+    image: '/images/hero/identite.webp',
     price: 199,
     name: l('Identité visuelle complète', 'Full visual identity', 'Identidad visual completa', 'Komplette visuelle Identität', 'Identità viżwali sħiħa'),
     tagline: l('Une image de marque cohérente partout.', 'A consistent brand image everywhere.', 'Una imagen de marca coherente en todas partes.', 'Ein einheitliches Markenbild überall.', 'Immaġni tal-marka konsistenti kullimkien.'),
@@ -144,6 +153,7 @@ export const LOGO_OFFERS: Offer[] = [
 
 export const MAINTENANCE = {
   id: 'maintenance',
+  image: '/images/services/maintenance.webp',
   pricePerMonth: 15,
   name: l('Maintenance & hébergement', 'Maintenance & hosting', 'Mantenimiento y alojamiento', 'Wartung & Hosting', 'Manutenzjoni u hosting'),
   tagline: l(
@@ -193,6 +203,8 @@ export const PRICING_UI = {
   ttc: l('TTC', 'incl. VAT', 'IVA incl.', 'inkl. MwSt.', 'VAT inkluża'),
   perMonth: l('/ mois', '/ month', '/ mes', '/ Monat', '/ xahar'),
   from: l('À partir de', 'From', 'Desde', 'Ab', 'Minn'),
+  included: l('Ce qui est inclus', 'What\'s included', 'Qué incluye', 'Was enthalten ist', 'X\'hemm inkluż'),
+  hide: l('Masquer', 'Hide', 'Ocultar', 'Ausblenden', 'Aħbi'),
   choose: l('Estimer avec cette offre', 'Estimate with this offer', 'Calcular con esta oferta', 'Mit diesem Angebot kalkulieren', 'Ikkalkula b\'din l-offerta'),
   optional: l('Facultatif', 'Optional', 'Opcional', 'Optional', 'Fakultattiv'),
   optionalNote: l(
@@ -220,7 +232,7 @@ export const PRICING_UI = {
   summary: l('Votre estimation', 'Your estimate', 'Tu estimación', 'Ihre Schätzung', 'L-istima tiegħek'),
   oneOff: l('À la création', 'One-off', 'Pago único', 'Einmalig', 'Darba biss'),
   monthly: l('Ensuite, par mois', 'Then, per month', 'Después, al mes', 'Danach, pro Monat', 'Imbagħad, kull xahar'),
-  deposit: l('dont acompte de 40 % à la signature', 'incl. 40% deposit on signing', 'incl. anticipo del 40 % a la firma', 'davon 40 % Anzahlung bei Unterzeichnung', 'inkluż depożitu ta\' 40 % mal-firma'),
+  deposit: l('dont acompte de 25 % à la signature', 'incl. 25% deposit on signing', 'incl. anticipo del 25 % a la firma', 'davon 25 % Anzahlung bei Unterzeichnung', 'inkluż depożitu ta\' 25 % mal-firma'),
   fromNote: l(
     'Prix de départ : l\'application est chiffrée précisément après l\'atelier de cadrage.',
     'Starting price: the app is priced precisely after the scoping workshop.',
@@ -232,11 +244,11 @@ export const PRICING_UI = {
   book: l('Réserver mon appel gratuit', 'Book my free call', 'Reservar mi llamada gratuita', 'Kostenloses Gespräch buchen', 'Ibbukkja s-sejħa b\'xejn'),
   quote: l('Demander un devis', 'Request a quote', 'Pedir presupuesto', 'Angebot anfordern', 'Itlob kwotazzjoni'),
   legal: l(
-    'Tous les prix sont indiqués TTC · Devis gratuit, réponse sous 24 h · Acompte de 40 % à la signature, solde à la livraison.',
-    'All prices include VAT · Free quote, reply within 24 h · 40% deposit on signing, balance on delivery.',
-    'Todos los precios incluyen IVA · Presupuesto gratuito, respuesta en 24 h · Anticipo del 40 % a la firma, resto a la entrega.',
-    'Alle Preise inkl. MwSt. · Kostenloses Angebot, Antwort innerhalb von 24 Std. · 40 % Anzahlung bei Unterzeichnung, Rest bei Übergabe.',
-    'Il-prezzijiet kollha jinkludu l-VAT · Kwotazzjoni b\'xejn, tweġiba fi 24 siegħa · Depożitu ta\' 40 % mal-firma, il-bqija mal-kunsinna.',
+    'Tous les prix sont indiqués TTC · Devis gratuit, réponse sous 24 h · Acompte de 25 % à la signature, solde à la livraison.',
+    'All prices include VAT · Free quote, reply within 24 h · 25% deposit on signing, balance on delivery.',
+    'Todos los precios incluyen IVA · Presupuesto gratuito, respuesta en 24 h · Anticipo del 25 % a la firma, resto a la entrega.',
+    'Alle Preise inkl. MwSt. · Kostenloses Angebot, Antwort innerhalb von 24 Std. · 25 % Anzahlung bei Unterzeichnung, Rest bei Übergabe.',
+    'Il-prezzijiet kollha jinkludu l-VAT · Kwotazzjoni b\'xejn, tweġiba fi 24 siegħa · Depożitu ta\' 25 % mal-firma, il-bqija mal-kunsinna.',
   ),
   ctaTitle: l('Un projet ? Parlons-en.', 'Got a project? Let\'s talk.', '¿Tienes un proyecto? Hablemos.', 'Ein Projekt? Lassen Sie uns sprechen.', 'Għandek proġett? Ejja nitkellmu.'),
 };
@@ -278,6 +290,9 @@ export const tr = (text: L10n, lang: Language) => text[lang] || text.fr;
 
 /** Every one-off offer the estimator can pick as "the project". */
 export const PROJECT_OFFERS: Offer[] = [...VITRINE_OFFERS, ECOMMERCE_OFFER, APPLICATION_OFFER];
+
+/** Share of the one-off price paid as a deposit when the contract is signed. */
+export const DEPOSIT_RATE = 0.25;
 
 /** Lowest price per category, for cards and the home carousel. */
 export const STARTING_PRICES = {

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Server } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
@@ -15,7 +14,7 @@ import {
   PROCESS_STEPS,
   tr,
 } from '@/lib/pricing';
-import { AnimatedPrice, ChooseButton, FeatureList, PriceLine, SectionHeading, SpotlightCard } from '@/components/pricing/PricingParts';
+import { AnimatedPrice, IncludedToggle, OfferCard, SectionHeading, SpotlightCard } from '@/components/pricing/PricingParts';
 import Estimator, { type EstimatorState } from '@/components/pricing/Estimator';
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -90,16 +89,7 @@ const Services = () => {
                       {tr(PRICING_UI.popular, language)}
                     </span>
                   )}
-                  <SpotlightCard highlight={o.popular}>
-                    <div className="mb-4 font-mono text-xs uppercase tracking-[0.2em]" style={{ color: o.popular ? 'hsl(var(--accent-teal))' : 'hsl(var(--silver) / 0.6)' }}>
-                      {tr(o.name, language)}
-                    </div>
-                    <PriceLine offer={o} />
-                    <p className="mt-3 text-sm leading-relaxed" style={{ color: 'hsl(var(--silver) / 0.65)' }}>{tr(o.tagline, language)}</p>
-                    <div className="my-6 h-px" style={{ background: 'hsl(0 0% 88% / 0.1)' }} />
-                    <div className="mb-8"><FeatureList items={o.features} /></div>
-                    <ChooseButton primary={o.popular} onClick={() => goEstimate({ project: o.id })} />
-                  </SpotlightCard>
+                  <OfferCard offer={o} onChoose={() => goEstimate({ project: o.id })} />
                 </motion.div>
               ))}
             </div>
@@ -111,18 +101,7 @@ const Services = () => {
             <div className="grid gap-6 md:grid-cols-2">
               {[ECOMMERCE_OFFER, APPLICATION_OFFER].map((o, i) => (
                 <motion.div key={o.id} {...reveal} transition={{ duration: 0.6, delay: i * 0.1, ease }}>
-                  <SpotlightCard>
-                    <div className="flex flex-wrap items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-xl font-bold" style={{ color: 'hsl(var(--silver))' }}>{tr(o.name, language)}</h3>
-                        <p className="mt-1 text-sm" style={{ color: 'hsl(var(--silver) / 0.65)' }}>{tr(o.tagline, language)}</p>
-                      </div>
-                      <div className="text-right"><PriceLine offer={o} size="md" accent /></div>
-                    </div>
-                    <div className="my-6 h-px" style={{ background: 'hsl(0 0% 88% / 0.1)' }} />
-                    <div className="mb-8"><FeatureList items={o.features} columns={2} /></div>
-                    <ChooseButton onClick={() => goEstimate({ project: o.id })} />
-                  </SpotlightCard>
+                  <OfferCard offer={o} wide onChoose={() => goEstimate({ project: o.id })} />
                 </motion.div>
               ))}
             </div>
@@ -134,14 +113,7 @@ const Services = () => {
             <div className="grid gap-6 md:grid-cols-2">
               {LOGO_OFFERS.map((o, i) => (
                 <motion.div key={o.id} {...reveal} transition={{ duration: 0.6, delay: i * 0.1, ease }}>
-                  <SpotlightCard>
-                    <h3 className="mb-3 text-lg font-bold" style={{ color: 'hsl(var(--silver))' }}>{tr(o.name, language)}</h3>
-                    <PriceLine offer={o} size="md" />
-                    <p className="mt-3 text-sm" style={{ color: 'hsl(var(--silver) / 0.65)' }}>{tr(o.tagline, language)}</p>
-                    <div className="my-6 h-px" style={{ background: 'hsl(0 0% 88% / 0.1)' }} />
-                    <div className="mb-8"><FeatureList items={o.features} columns={2} /></div>
-                    <ChooseButton onClick={() => goEstimate({ brand: o.id })} />
-                  </SpotlightCard>
+                  <OfferCard offer={o} wide onChoose={() => goEstimate({ brand: o.id })} />
                 </motion.div>
               ))}
             </div>
@@ -151,29 +123,30 @@ const Services = () => {
           <section aria-labelledby="sec-care">
             <SectionHeading id="sec-care" num="04" title={tr(PRICING_UI.sectionMaintenance, language)} badge={tr(PRICING_UI.optional, language)} />
             <motion.div {...reveal} transition={{ duration: 0.6, ease }}>
-              <SpotlightCard>
-                <div className="grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:items-center">
-                  <div className="md:border-r md:pr-8" style={{ borderColor: 'hsl(0 0% 88% / 0.1)' }}>
-                    <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: 'hsl(var(--accent-teal) / 0.15)' }}>
-                      <Server size={22} style={{ color: 'hsl(var(--accent-teal))' }} aria-hidden="true" />
-                    </div>
+              <SpotlightCard className="!p-0">
+                <div className="grid md:grid-cols-2">
+                  <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto md:min-h-[320px]">
+                    <img src={MAINTENANCE.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <div aria-hidden="true" className="absolute inset-0 hidden md:block" style={{ background: 'linear-gradient(90deg, transparent 55%, hsl(var(--bg-card)) 100%)' }} />
+                    <div aria-hidden="true" className="absolute inset-0 md:hidden" style={{ background: 'linear-gradient(180deg, transparent 45%, hsl(var(--bg-card)) 100%)' }} />
+                  </div>
+                  <div className="flex flex-col justify-center p-7 md:p-10">
                     <div className="flex items-baseline gap-2">
                       <AnimatedPrice value={MAINTENANCE.pricePerMonth} className="text-5xl font-extrabold" style={{ color: 'hsl(var(--accent-teal))' }} />
                       <span className="text-sm" style={{ color: 'hsl(var(--silver) / 0.6)' }}>
                         {tr(PRICING_UI.ttc, language)} {tr(PRICING_UI.perMonth, language)}
                       </span>
                     </div>
-                    <p className="mt-3 text-sm leading-relaxed" style={{ color: 'hsl(var(--silver) / 0.65)' }}>{tr(MAINTENANCE.tagline, language)}</p>
-                  </div>
-                  <div>
-                    <FeatureList items={MAINTENANCE.features} columns={2} />
+                    <p className="mt-2 text-sm" style={{ color: 'hsl(var(--silver) / 0.7)' }}>{tr(MAINTENANCE.tagline, language)}</p>
                     <p
-                      className="mt-6 rounded-xl p-4 text-sm leading-relaxed"
+                      className="mt-5 rounded-xl p-4 text-sm leading-relaxed"
                       style={{ background: 'hsl(var(--bg-dark))', border: '1px dashed hsl(var(--accent-teal) / 0.4)', color: 'hsl(var(--silver) / 0.8)' }}
                     >
                       <strong style={{ color: 'hsl(var(--accent-teal))' }}>{tr(PRICING_UI.optional, language)} · </strong>
                       {tr(PRICING_UI.optionalNote, language)}
                     </p>
+                    <div className="my-5 h-px" style={{ background: 'hsl(0 0% 88% / 0.1)' }} />
+                    <IncludedToggle items={MAINTENANCE.features} columns={2} />
                   </div>
                 </div>
               </SpotlightCard>
