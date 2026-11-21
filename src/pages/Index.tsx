@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
-import HalideHero from '@/components/ui/halide-hero';
+import ServicesHero from '@/components/ServicesHero';
 import { useTranslation } from '@/contexts/LanguageContext';
 import benefitPersonnalisation from '@/assets/benefit-personnalisation.png';
 import benefitMobile from '@/assets/benefit-mobile.jpg';
@@ -70,7 +70,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: 'hsl(var(--bg-dark))' }}>
+    <div className="min-h-screen overflow-x-clip" style={{ background: 'hsl(var(--bg-dark))' }}>
       <SEOHead 
         title="Localweb Partners | Agence Web Design Nantes"
         description="Agence web spécialisée création sites web entreprises locales. Site vitrine professionnel, e-commerce, SEO local. Devis gratuit 24h. Nantes, France."
@@ -79,7 +79,7 @@ const Index = () => {
       />
       <Navbar />
       
-      <HalideHero />
+      <ServicesHero />
 
       {/* Benefits Section */}
       <section
