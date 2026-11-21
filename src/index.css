@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark cinematic design system */
+    --bg-dark: 0 0% 4%;
+    --bg-section: 0 0% 7%;
+    --bg-card: 0 0% 9%;
+    --silver: 0 0% 88%;
+    --silver-muted: 0 0% 88%;
+    --accent-teal: 168 58% 45%;
+    --accent-teal-dark: 168 58% 38%;
+    --lw-border: 0 0% 88% / 0.08;
+
+    --background: 0 0% 4%;
+    --foreground: 0 0% 88%;
+
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 88%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 88%;
+
+    --primary: 168 58% 45%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 88%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 168 58% 45%;
+    --accent-foreground: 0 0% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 168 58% 45%;
+
+    --radius: 0.75rem;
+
+    /* Legacy color aliases for components */
+    --tiffany: 168 58% 45%;
+    --tiffany-dark: 168 58% 38%;
+    --cobalt: 0 0% 88%;
+    --cobalt-light: 0 0% 75%;
+    --gray-light: 0 0% 7%;
+    --text-dark: 0 0% 88%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+    background-color: hsl(var(--bg-dark));
+    color: hsl(var(--silver));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background: hsl(var(--accent-teal));
+    color: hsl(var(--bg-dark));
+    @apply font-extrabold px-6 py-3 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .btn-primary:hover {
+    background: hsl(var(--silver));
+  }
+
+  .btn-secondary {
+    @apply font-semibold px-6 py-3 transition-all duration-300 hover:-translate-y-0.5;
+    background: transparent;
+    color: hsl(var(--silver));
+    border: 1px solid hsl(var(--silver) / 0.2);
+  }
+
+  .btn-secondary:hover {
+    border-color: hsl(var(--accent-teal));
+    color: hsl(var(--accent-teal));
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .card-hover:hover {
+    border-color: hsl(var(--accent-teal) / 0.3);
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-4;
+    color: hsl(var(--silver));
+  }
+
+  .section-subtitle {
+    @apply text-lg md:text-xl max-w-2xl mx-auto;
+    color: hsl(var(--silver) / 0.5);
+  }
+
+  .section-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: hsl(var(--accent-teal));
+    text-transform: uppercase;
+    font-family: monospace;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .gradient-hero {
+    background: hsl(var(--bg-dark));
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r;
+    --tw-gradient-from: hsl(var(--accent-teal));
+    --tw-gradient-to: hsl(var(--silver));
+  }
+
+  .dark-card {
+    background: hsl(var(--bg-card));
+    border: 1px solid hsl(var(--lw-border));
+    @apply transition-all duration-300;
+  }
+
+  .dark-card:hover {
+    border-color: hsl(var(--accent-teal) / 0.3);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
