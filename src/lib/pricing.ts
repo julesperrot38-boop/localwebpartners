@@ -250,29 +250,62 @@ export const PRICING_UI = {
     'Alle Preise inkl. MwSt. · Kostenloses Angebot, Antwort innerhalb von 24 Std. · 25 % Anzahlung bei Unterzeichnung, Rest bei Übergabe.',
     'Il-prezzijiet kollha jinkludu l-VAT · Kwotazzjoni b\'xejn, tweġiba fi 24 siegħa · Depożitu ta\' 25 % mal-firma, il-bqija mal-kunsinna.',
   ),
+  stepIncludes: l('Ce que comprend cette étape', 'What this step includes', 'Qué incluye esta etapa', 'Was dieser Schritt umfasst', 'X\'jinkludi dan il-pass'),
+  step: l('Étape', 'Step', 'Etapa', 'Schritt', 'Pass'),
   ctaTitle: l('Un projet ? Parlons-en.', 'Got a project? Let\'s talk.', '¿Tienes un proyecto? Hablemos.', 'Ein Projekt? Lassen Sie uns sprechen.', 'Għandek proġett? Ejja nitkellmu.'),
 };
 
-export const PROCESS_STEPS: { title: L10n; desc: L10n }[] = [
+export const PROCESS_STEPS: { title: L10n; desc: L10n; details: L10n[] }[] = [
   {
     title: l('Premier rendez-vous', 'First meeting', 'Primera cita', 'Erstes Gespräch', 'L-ewwel laqgħa'),
     desc: l('On échange sur votre activité, vos objectifs et vos envies.', 'We talk about your business, your goals and what you want.', 'Hablamos de tu actividad, tus objetivos y tus ideas.', 'Wir sprechen über Ihr Unternehmen, Ihre Ziele und Wünsche.', 'Nitkellmu dwar in-negozju, l-għanijiet u x\'tixtieq.'),
+    details: [
+      l('Appel gratuit de 30 minutes, en visio ou par téléphone', 'Free 30-minute call, by video or phone', 'Llamada gratuita de 30 minutos, por vídeo o teléfono', 'Kostenloses 30-Minuten-Gespräch per Video oder Telefon', 'Sejħa b\'xejn ta\' 30 minuta, bil-video jew bit-telefon'),
+      l('Présentation de votre activité et de vos clients', 'Overview of your business and customers', 'Presentación de tu actividad y tus clientes', 'Vorstellung Ihres Unternehmens und Ihrer Kunden', 'Preżentazzjoni tan-negozju u tal-klijenti tiegħek'),
+      l('Vos objectifs : visibilité, contacts, ventes', 'Your goals: visibility, leads, sales', 'Tus objetivos: visibilidad, contactos, ventas', 'Ihre Ziele: Sichtbarkeit, Anfragen, Verkäufe', 'L-għanijiet tiegħek: viżibbiltà, kuntatti, bejgħ'),
+      l('Vos goûts : sites que vous aimez, couleurs, style', 'Your tastes: sites you like, colours, style', 'Tus gustos: sitios que te gustan, colores, estilo', 'Ihr Geschmack: Lieblingswebsites, Farben, Stil', 'Il-gosti tiegħek: siti li jogħġbuk, kuluri, stil'),
+      l('Conseil sur l\'offre la plus adaptée', 'Advice on the best-suited offer', 'Consejo sobre la oferta más adecuada', 'Beratung zum passenden Angebot', 'Parir dwar l-aħjar offerta għalik'),
+    ],
   },
   {
     title: l('Présentation de la maquette et du devis', 'Mockup and quote', 'Presentación de la maqueta y del presupuesto', 'Entwurf und Angebot', 'Preżentazzjoni tal-mockup u l-kwotazzjoni'),
     desc: l('Vous découvrez la maquette de votre projet et un devis clair, sans surprise.', 'You see the mockup of your project and a clear quote, with no surprises.', 'Descubres la maqueta de tu proyecto y un presupuesto claro, sin sorpresas.', 'Sie sehen den Entwurf Ihres Projekts und ein klares Angebot ohne Überraschungen.', 'Tara l-mockup tal-proġett u kwotazzjoni ċara, mingħajr sorpriżi.'),
+    details: [
+      l('Maquette de la page d\'accueil à vos couleurs', 'Homepage mockup in your colours', 'Maqueta de la página de inicio con tus colores', 'Entwurf der Startseite in Ihren Farben', 'Mockup tal-paġna ewlenija bil-kuluri tiegħek'),
+      l('Plan des pages de votre site', 'Site map of your pages', 'Estructura de las páginas de tu sitio', 'Seitenstruktur Ihrer Website', 'Pjan tal-paġni tas-sit'),
+      l('Devis détaillé et délai de livraison', 'Detailed quote and delivery time', 'Presupuesto detallado y plazo de entrega', 'Detailliertes Angebot und Lieferzeit', 'Kwotazzjoni dettaljata u żmien ta\' kunsinna'),
+      l('Ajustements avant validation', 'Adjustments before you approve', 'Ajustes antes de la validación', 'Anpassungen vor der Freigabe', 'Bidliet qabel l-approvazzjoni'),
+    ],
   },
   {
     title: l('Signature du contrat', 'Contract signing', 'Firma del contrato', 'Vertragsunterzeichnung', 'Iffirmar tal-kuntratt'),
     desc: l('On valide ensemble le cadre du projet avant de lancer la création.', 'We agree on the project scope together before starting.', 'Validamos juntos el alcance del proyecto antes de empezar.', 'Wir legen gemeinsam den Rahmen fest, bevor wir starten.', 'Naqblu flimkien fuq il-proġett qabel nibdew.'),
+    details: [
+      l('Contrat clair : contenu, prix et délais', 'Clear contract: scope, price and timing', 'Contrato claro: contenido, precio y plazos', 'Klarer Vertrag: Umfang, Preis und Fristen', 'Kuntratt ċar: kontenut, prezz u skadenzi'),
+      l('Acompte de 25 % à la signature', '25% deposit on signing', 'Anticipo del 25 % a la firma', '25 % Anzahlung bei Unterzeichnung', 'Depożitu ta\' 25 % mal-firma'),
+      l('Planning de création partagé', 'Shared build schedule', 'Calendario de creación compartido', 'Gemeinsamer Zeitplan', 'Skeda tal-ħolqien maqsuma'),
+      l('Collecte de vos contenus : textes, photos, logo', 'Gathering your content: text, photos, logo', 'Recogida de tus contenidos: textos, fotos, logo', 'Sammeln Ihrer Inhalte: Texte, Fotos, Logo', 'Ġbir tal-kontenut: test, ritratti, logo'),
+    ],
   },
   {
     title: l('Création & feedbacks réguliers', 'Build & regular feedback', 'Creación y feedback regular', 'Umsetzung & regelmäßiges Feedback', 'Ħolqien u feedback regolari'),
     desc: l('Des points réguliers pour que le résultat corresponde parfaitement à vos attentes.', 'Regular check-ins so the result matches exactly what you expect.', 'Puntos regulares para que el resultado se ajuste a lo que esperas.', 'Regelmäßige Abstimmungen, damit das Ergebnis genau Ihren Erwartungen entspricht.', 'Laqgħat regolari biex ir-riżultat ikun eżatt kif tistenna.'),
+    details: [
+      l('Création de votre site sur-mesure', 'Building your custom website', 'Creación de tu sitio a medida', 'Umsetzung Ihrer individuellen Website', 'Ħolqien tas-sit apposta għalik'),
+      l('Version de test en ligne pour suivre l\'avancement', 'Online preview to follow progress', 'Versión de prueba en línea para seguir el avance', 'Online-Vorschau, um den Fortschritt zu verfolgen', 'Verżjoni ta\' prova online biex issegwi l-progress'),
+      l('Points réguliers pour valider chaque étape', 'Regular check-ins to approve each stage', 'Puntos regulares para validar cada etapa', 'Regelmäßige Termine zur Freigabe jedes Schritts', 'Laqgħat regolari biex napprovaw kull pass'),
+      l('Vos retours intégrés au fil de l\'eau', 'Your feedback applied as we go', 'Tus comentarios integrados sobre la marcha', 'Ihr Feedback wird laufend umgesetzt', 'Il-feedback tiegħek jiddaħħal hekk kif jasal'),
+    ],
   },
   {
     title: l('Mise en ligne', 'Go live', 'Puesta en línea', 'Livegang', 'Tnedija online'),
     desc: l('Votre site est en ligne, prêt à accueillir vos clients.', 'Your website is live, ready to welcome your customers.', 'Tu sitio está en línea, listo para recibir a tus clientes.', 'Ihre Website ist online und bereit für Ihre Kunden.', 'Is-sit tiegħek huwa online, lest għall-klijenti.'),
+    details: [
+      l('Mise en ligne sur votre nom de domaine', 'Launch on your domain name', 'Puesta en línea en tu dominio', 'Livegang unter Ihrer Domain', 'Tnedija fuq l-isem tad-dominju tiegħek'),
+      l('Tests sur mobile, tablette et ordinateur', 'Testing on mobile, tablet and desktop', 'Pruebas en móvil, tableta y ordenador', 'Tests auf Handy, Tablet und Computer', 'Testijiet fuq mobile, tablet u kompjuter'),
+      l('Référencement Google et fiche Google Business selon l\'offre', 'Google SEO and Google Business profile, depending on the offer', 'SEO en Google y ficha de Google Business según la oferta', 'Google-SEO und Unternehmensprofil je nach Angebot', 'SEO ta\' Google u profil Google Business skont l-offerta'),
+      l('Prise en main du site et solde à la livraison', 'Handover training, balance due on delivery', 'Formación para gestionar el sitio y pago del resto a la entrega', 'Einweisung in die Website, Restzahlung bei Übergabe', 'Taħriġ fuq is-sit u l-bqija titħallas mal-kunsinna'),
+    ],
   },
 ];
 

@@ -11,11 +11,11 @@ import {
   LOGO_OFFERS,
   MAINTENANCE,
   PRICING_UI,
-  PROCESS_STEPS,
   tr,
 } from '@/lib/pricing';
 import { AnimatedPrice, IncludedToggle, OfferCard, SectionHeading, SpotlightCard } from '@/components/pricing/PricingParts';
 import Estimator, { type EstimatorState } from '@/components/pricing/Estimator';
+import ProcessSteps from '@/components/pricing/ProcessSteps';
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const reveal = {
@@ -163,27 +163,7 @@ const Services = () => {
           {/* 06 Comment ça se passe */}
           <section aria-labelledby="sec-process">
             <SectionHeading id="sec-process" num="06" title={tr(PRICING_UI.sectionProcess, language)} />
-            <ol className="grid gap-6 md:grid-cols-5">
-              {PROCESS_STEPS.map((s, i) => (
-                <motion.li key={i} {...reveal} transition={{ duration: 0.5, delay: i * 0.08, ease }} className="relative">
-                  {i < PROCESS_STEPS.length - 1 && (
-                    <span aria-hidden="true" className="absolute left-12 right-0 top-5 hidden h-px md:block" style={{ background: 'hsl(var(--accent-teal) / 0.3)' }} />
-                  )}
-                  <span
-                    className="relative flex h-10 w-10 items-center justify-center rounded-full font-mono text-xs"
-                    style={
-                      i === 0
-                        ? { background: 'hsl(var(--accent-teal))', color: 'hsl(var(--bg-dark))' }
-                        : { border: '1px solid hsl(var(--accent-teal) / 0.6)', color: 'hsl(var(--accent-teal))', background: 'hsl(var(--bg-dark))' }
-                    }
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="mt-4 font-semibold" style={{ color: 'hsl(var(--silver))' }}>{tr(s.title, language)}</h3>
-                  <p className="mt-1 text-sm leading-relaxed" style={{ color: 'hsl(var(--silver) / 0.65)' }}>{tr(s.desc, language)}</p>
-                </motion.li>
-              ))}
-            </ol>
+            <ProcessSteps />
           </section>
 
           <p className="border-t pt-6 text-center text-xs" style={{ borderColor: 'hsl(0 0% 88% / 0.1)', color: 'hsl(var(--silver) / 0.55)' }}>
