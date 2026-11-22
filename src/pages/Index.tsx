@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Smartphone, MapPin, ArrowRight, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -5,6 +6,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
 import ServicesHero from '@/components/ServicesHero';
+
+const WorldPresence = lazy(() => import('@/components/world/WorldPresence'));
 import { useTranslation } from '@/contexts/LanguageContext';
 import benefitPersonnalisation from '@/assets/benefit-personnalisation.png';
 import benefitMobile from '@/assets/benefit-mobile.jpg';
@@ -80,6 +83,10 @@ const Index = () => {
       <Navbar />
       
       <ServicesHero />
+
+      <Suspense fallback={<div style={{ minHeight: '100svh', background: 'hsl(var(--bg-dark))' }} />}>
+        <WorldPresence />
+      </Suspense>
 
       {/* Benefits Section */}
       <section
