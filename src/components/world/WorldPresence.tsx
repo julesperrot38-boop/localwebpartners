@@ -11,7 +11,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Clock } from 'lucide-react';
 import { useTranslation } from '@/contexts/LanguageContext';
 import { tr } from '@/lib/pricing';
-import { COUNTRY_SHAPES, LAND, LAND_DETAIL, MAP_H, MAP_W } from './worldMapData';
+import { COUNTRY_SHAPES, LAND, LAND_DETAIL, MAP_H, MAP_W, projY } from './worldMapData';
 import { PLACES, WORLD_TEXT } from './places';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -30,7 +30,7 @@ const GRATICULE = (() => {
     d += `M${x.toFixed(1)} 0V${MAP_H}`;
   }
   for (let lat = -45; lat <= 75; lat += 15) {
-    const y = ((84 - lat) / 142) * MAP_H;
+    const y = projY(lat);
     d += `M0 ${y.toFixed(1)}H${MAP_W}`;
   }
   return d;
@@ -80,7 +80,7 @@ export default function WorldPresence() {
     if (!root) return;
     const q = (s: string) => root.querySelector(s);
     const svg = q('.wp-map') as SVGSVGElement | null;
-    const countries = Array.from(root.querySelectorAll('.wp-country')) as SVGPathElement[];
+    const countries = Array.from(root.querySelectorAll('.wp-country')) as SVGGElement[];
     const routes = q('.wp-routes') as SVGGElement | null;
     const tabs = q('.wp-tabs') as HTMLElement | null;
     const pin = q('.wp-pin') as HTMLElement | null;
@@ -101,7 +101,7 @@ export default function WorldPresence() {
       if (i < 0) {
         const w = a < 1 ? 620 : 980;
         const h = w / a;
-        return [500 - w / 2, 175 - h / 2, w, h];
+        return [MAP_W / 2 - w / 2, MAP_H * 0.47 - h / 2, w, h];
       }
       const [cx, cy] = CENTERS[i];
       const box = SHAPES[i].box;
@@ -139,6 +139,17 @@ export default function WorldPresence() {
         pin.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
       }
     };
+    // tweens only mark the map dirty; it is redrawn once per frame, after GSAP has rendered
+    let dirty = true;
+    const mark = () => {
+      dirty = true;
+    };
+    const flush = () => {
+      if (!dirty) return;
+      dirty = false;
+      apply();
+    };
+    gsap.ticker.add(flush);
     const setCam = (c: number[]) => {
       cam.x = c[0];
       cam.y = c[1];
@@ -160,14 +171,14 @@ export default function WorldPresence() {
 
       mm.add(REDUCE, () => {
         // still map: tabs just jump the camera
-        countries.forEach((c, k) => gsap.set(c, { opacity: k === 0 ? 1 : 0, scale: 1 }));
+        countries.forEach((c, k) => gsap.set(c, { autoAlpha: k === 0 ? 1 : 0, scale: 1 }));
         arcEls.forEach((p) => gsap.set(p, { opacity: 0 }));
         show(0);
         introRef.current = false;
         setIntro(false);
         setCam(camAt(0));
         nav.current = (i) => {
-          countries.forEach((c, k) => gsap.set(c, { opacity: k === i ? 1 : 0 }));
+          countries.forEach((c, k) => gsap.set(c, { autoAlpha: k === i ? 1 : 0 }));
           show(i);
           setCam(camAt(i));
         };
@@ -177,7 +188,7 @@ export default function WorldPresence() {
       });
 
       mm.add(`not ${REDUCE}`, () => {
-        gsap.set(countries, { scale: 0.6, opacity: 0, transformOrigin: '50% 50%' });
+        gsap.set(countries, { scale: 0.6, autoAlpha: 0, transformOrigin: '50% 50%' });
         arcEls.forEach((p) => gsap.set(p, { strokeDashoffset: 1, opacity: 0 }));
         setCam(camAt(-1));
         show(-1);
@@ -189,8 +200,8 @@ export default function WorldPresence() {
         mt.to({}, { duration: 0.7 });
         for (let i = 0; i < SHAPES.length; i++) {
           if (i === 0) {
-            mt.to(cam, { x: () => camAt(0)[0], y: () => camAt(0)[1], w: () => camAt(0)[2], h: () => camAt(0)[3], duration: 1.2, onUpdate: apply });
-            mt.to(countries[0], { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.6)' }, '-=0.5');
+            mt.to(cam, { x: () => camAt(0)[0], y: () => camAt(0)[1], w: () => camAt(0)[2], h: () => camAt(0)[3], duration: 1.5, ease: 'sine.inOut', onUpdate: mark });
+            mt.to(countries[0], { scale: 1, autoAlpha: 1, duration: 0.8, ease: 'back.out(1.4)' }, '-=0.6');
           } else {
             const at = mt.duration();
             const mid = () => {
@@ -202,17 +213,17 @@ export default function WorldPresence() {
               const cy = (CENTERS[i - 1][1] + CENTERS[i][1]) / 2 - h * 0.08;
               return [cx - w / 2, cy - h / 2, w, h];
             };
-            mt.to(cam, { x: () => mid()[0], y: () => mid()[1], w: () => mid()[2], h: () => mid()[3], duration: 0.7, ease: 'power2.in', onUpdate: apply }, at);
-            mt.to(cam, { x: () => camAt(i)[0], y: () => camAt(i)[1], w: () => camAt(i)[2], h: () => camAt(i)[3], duration: 0.8, ease: 'power2.out', onUpdate: apply });
+            mt.to(cam, { x: () => mid()[0], y: () => mid()[1], w: () => mid()[2], h: () => mid()[3], duration: 0.9, ease: 'sine.inOut', onUpdate: mark }, at);
+            mt.to(cam, { x: () => camAt(i)[0], y: () => camAt(i)[1], w: () => camAt(i)[2], h: () => camAt(i)[3], duration: 1.1, ease: 'sine.inOut', onUpdate: mark });
             mt.set(arcEls[i - 1], { opacity: 1 }, at + 0.1);
-            mt.to(arcEls[i - 1], { strokeDashoffset: 0, duration: 1.1, ease: 'power1.inOut' }, at + 0.15);
-            mt.to(arcEls[i - 1], { opacity: 0, duration: 0.4, ease: 'power1.out' }, at + 1.35);
-            mt.fromTo(planeState, { i: i - 1, t: 0 }, { i: i - 1, t: 1, duration: 1.1, ease: 'power1.inOut', onUpdate: apply, immediateRender: false }, at + 0.15);
-            mt.to(countries[i - 1], { opacity: 0, scale: 0.85, duration: 0.5, ease: 'power1.in' }, at + 0.05);
-            mt.to(countries[i], { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' }, at + 1.0);
+            mt.to(arcEls[i - 1], { strokeDashoffset: 0, duration: 1.5, ease: 'sine.inOut' }, at + 0.2);
+            mt.to(arcEls[i - 1], { opacity: 0, duration: 0.5, ease: 'power1.out' }, at + 1.85);
+            mt.fromTo(planeState, { i: i - 1, t: 0 }, { i: i - 1, t: 1, duration: 1.5, ease: 'sine.inOut', onUpdate: mark, immediateRender: false }, at + 0.2);
+            mt.to(countries[i - 1], { autoAlpha: 0, scale: 0.85, duration: 0.6, ease: 'power1.in' }, at + 0.05);
+            mt.to(countries[i], { autoAlpha: 1, scale: 1, duration: 0.8, ease: 'back.out(1.4)' }, at + 1.25);
           }
           arrivals.push(mt.duration());
-          mt.to({}, { duration: 1 });
+          mt.to({}, { duration: 1.6 });
         }
 
         const st = ScrollTrigger.create({
@@ -220,21 +231,21 @@ export default function WorldPresence() {
           start: 'top top',
           end: 'bottom bottom',
           animation: mt,
-          scrub: 0.8,
+          scrub: 1.6,
           invalidateOnRefresh: true,
         });
 
         function sync() {
           const t = mt.time();
           let i = -1;
-          for (let k = 0; k < arrivals.length; k++) if (t >= arrivals[k] - (k === 0 ? 0.8 : 0.65)) i = k;
+          for (let k = 0; k < arrivals.length; k++) if (t >= arrivals[k] - (k === 0 ? 0.9 : 0.8)) i = k;
           const lead = t < 0.75;
           if (lead !== introRef.current) {
             introRef.current = lead;
             setIntro(lead);
           }
           show(i);
-          apply();
+          mark();
         }
 
         nav.current = (i) => {
@@ -243,7 +254,7 @@ export default function WorldPresence() {
           window.scrollTo({ top: y, behavior: 'smooth' });
         };
 
-        const onResize = () => apply();
+        const onResize = () => mark();
         window.addEventListener('resize', onResize);
         // the section is lazy-loaded below the hero: measure again once everything has settled
         const r = window.setTimeout(() => ScrollTrigger.refresh(), 400);
@@ -254,7 +265,10 @@ export default function WorldPresence() {
       });
     }, root);
 
-    return () => ctx.revert();
+    return () => {
+      gsap.ticker.remove(flush);
+      ctx.revert();
+    };
   }, []);
 
   // gentle 3D tilt of the photo card under the pointer
@@ -292,14 +306,6 @@ export default function WorldPresence() {
             <pattern id="wp-dots" patternUnits="userSpaceOnUse" width="4" height="4">
               <circle cx="2" cy="2" r="1" />
             </pattern>
-            <filter id="wp-glow" x="-60%" y="-60%" width="220%" height="220%" primitiveUnits="objectBoundingBox">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="0.06" result="b" />
-              <feMerge>
-                <feMergeNode in="b" />
-                <feMergeNode in="b" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
           </defs>
           <path className="wp-grat" d={GRATICULE} />
           <path className="wp-land" d={LAND} />
@@ -318,7 +324,11 @@ export default function WorldPresence() {
             <path key={'l' + i} className="wp-arc-live" d={a.d} pathLength={1} />
           ))}
           {SHAPES.map((s, i) => (
-            <path key={'c' + i} className="wp-country" d={s.d} filter="url(#wp-glow)" />
+            <g key={'c' + i} className="wp-country">
+              <path className="wp-halo wp-halo-1" d={s.d} />
+              <path className="wp-halo wp-halo-2" d={s.d} />
+              <path className="wp-fill" d={s.d} />
+            </g>
           ))}
           <circle className="wp-plane" r="1" />
         </svg>
@@ -335,10 +345,6 @@ export default function WorldPresence() {
           <p className="wp-kicker">// {tr(WORLD_TEXT.kicker, language)}</p>
           <h2>{tr(WORLD_TEXT.title, language)}</h2>
           <p>{tr(WORLD_TEXT.intro, language)}</p>
-          <span className="wp-scroll" aria-hidden="true">
-            {tr(WORLD_TEXT.scroll, language)}
-            <span />
-          </span>
         </div>
 
         {/* destinations */}
@@ -400,7 +406,7 @@ export default function WorldPresence() {
 }
 
 const CSS = `
-.wp-root{position:relative;height:calc(100svh * (var(--steps) + 1.6));background:hsl(var(--bg-dark));border-top:1px solid hsl(0 0% 88% / .08)}
+.wp-root{position:relative;height:calc(100svh * (var(--steps) * 2 + 2));background:hsl(var(--bg-dark));border-top:1px solid hsl(0 0% 88% / .08)}
 .wp-stage{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden;font-family:Inter,system-ui,sans-serif}
 .wp-map{position:absolute;inset:0;width:100%;height:100%;max-width:none}
 .wp-grat{fill:none;stroke:hsl(0 0% 88% / .05);stroke-width:1;vector-effect:non-scaling-stroke}
@@ -411,7 +417,11 @@ const CSS = `
 .wp-ghost.is-on{opacity:0}
 .wp-arc{fill:none;stroke:hsl(var(--accent-teal) / .22);stroke-width:1;stroke-dasharray:3 5;vector-effect:non-scaling-stroke}
 .wp-arc-live{fill:none;stroke:hsl(var(--accent-teal));stroke-width:2;stroke-linecap:round;stroke-dasharray:1;vector-effect:non-scaling-stroke}
-.wp-country{opacity:0;fill:hsl(var(--accent-teal));stroke:hsl(168 70% 70%);stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.wp-country{opacity:0;visibility:hidden}
+.wp-fill{fill:hsl(var(--accent-teal));stroke:hsl(168 70% 70%);stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.wp-halo{fill:none;stroke:hsl(var(--accent-teal));stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.wp-halo-1{stroke-width:26px;opacity:.10}
+.wp-halo-2{stroke-width:10px;opacity:.22}
 .wp-plane{fill:#fff;opacity:0;filter:drop-shadow(0 0 4px hsl(var(--accent-teal)))}
 .wp-pin{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;transition:opacity .5s;z-index:2}
 .wp-pin i{position:absolute;left:-56px;top:-56px;width:112px;height:112px;border-radius:50%;border:1.5px solid hsl(var(--accent-teal));animation:wp-ping 2.8s cubic-bezier(.2,.6,.3,1) infinite}
@@ -427,9 +437,6 @@ const CSS = `
 .wp-kicker{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:hsl(var(--accent-teal))}
 .wp-intro h2{margin:18px auto 18px;max-width:14ch;font-size:clamp(40px,6.4vw,96px);font-weight:800;line-height:.95;letter-spacing:-.04em;color:hsl(var(--silver))}
 .wp-intro>p:not(.wp-kicker){max-width:440px;margin:0 auto;font-size:16px;line-height:1.65;color:hsl(var(--silver) / .72)}
-.wp-scroll{display:inline-flex;flex-direction:column;align-items:center;gap:8px;margin-top:28px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:hsl(var(--silver) / .5)}
-.wp-scroll span{width:1px;height:42px;background:linear-gradient(hsl(var(--accent-teal)),transparent);animation:wp-flow 2s infinite ease-in-out;transform-origin:top}
-@keyframes wp-flow{0%{transform:scaleY(0);opacity:0}40%{opacity:1}100%{transform:scaleY(1);opacity:0}}
 .wp-tabs{position:absolute;z-index:4;left:50%;top:clamp(84px,12vh,120px);transform:translateX(-50%);display:flex;gap:4px;padding:5px;border-radius:999px;background:hsl(var(--bg-dark) / .6);border:1px solid hsl(0 0% 88% / .1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);max-width:calc(100% - 24px);overflow-x:auto;scrollbar-width:none}
 .wp-tabs::-webkit-scrollbar{display:none}
 .wp-tabs button{display:flex;align-items:center;gap:8px;white-space:nowrap;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:500;color:hsl(var(--silver) / .65);transition:background .3s,color .3s}
@@ -473,6 +480,6 @@ const CSS = `
 @media (prefers-reduced-motion: reduce){
   .wp-root{height:auto}
   .wp-stage{position:relative}
-  .wp-pin i,.wp-scroll span{animation:none}
+  .wp-pin i{animation:none}
 }
 `;
