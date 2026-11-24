@@ -8,10 +8,10 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEve
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Clock } from 'lucide-react';
+import { ArrowRight, Clock, Globe2 } from 'lucide-react';
 import { useTranslation } from '@/contexts/LanguageContext';
 import { tr } from '@/lib/pricing';
-import { COUNTRY_SHAPES, LAND, LAND_DETAIL, MAP_H, MAP_W, projY } from './worldMapData';
+import { COUNTRY_SHAPES, LAND, LAND_DETAIL, MAP_H, MAP_W } from './worldMapData';
 import { PLACES, WORLD_TEXT } from './places';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -22,19 +22,6 @@ const centerOf = (b: Box): [number, number] => [(b[0] + b[2]) / 2, (b[1] + b[3])
 const CENTERS = SHAPES.map((s) => centerOf(s.box));
 const REDUCE = '(prefers-reduced-motion: reduce)';
 
-/** Graticule every 15°, in map units. */
-const GRATICULE = (() => {
-  let d = '';
-  for (let lon = -180; lon <= 180; lon += 15) {
-    const x = ((lon + 180) / 360) * MAP_W;
-    d += `M${x.toFixed(1)} 0V${MAP_H}`;
-  }
-  for (let lat = -45; lat <= 75; lat += 15) {
-    const y = projY(lat);
-    d += `M0 ${y.toFixed(1)}H${MAP_W}`;
-  }
-  return d;
-})();
 
 /** Curved flight path between two map points, bowing "north". */
 function arc(a: [number, number], b: [number, number]) {
@@ -85,10 +72,9 @@ export default function WorldPresence() {
     const tabs = q('.wp-tabs') as HTMLElement | null;
     const pin = q('.wp-pin') as HTMLElement | null;
     const stage = q('.wp-stage') as HTMLElement | null;
-    const dots = q('#wp-dots') as SVGPatternElement | null;
-    const dot = q('#wp-dots circle') as SVGCircleElement | null;
     const plane = q('.wp-plane') as SVGCircleElement | null;
     const arcEls = Array.from(root.querySelectorAll('.wp-arc-live')) as SVGPathElement[];
+    const markers = Array.from(root.querySelectorAll('.wp-marker')) as SVGGElement[];
     if (!svg || !stage || countries.length !== SHAPES.length) return;
 
     const cam = { x: 0, y: 0, w: MAP_W, h: MAP_H };
@@ -103,6 +89,13 @@ export default function WorldPresence() {
         const h = w / a;
         return [MAP_W / 2 - w / 2, MAP_H * 0.47 - h / 2, w, h];
       }
+      if (i >= PLACES.length) {
+        // the whole world, lifted a little so the closing caption sits below it
+        const w = a < 1 ? 1000 : 1000;
+        const h = w / a;
+        // portrait: the whole world sits in the top third; wide: just above centre
+        return [MAP_W / 2 - w / 2, a < 1 ? MAP_H * 0.5 - h * 0.3 : MAP_H * 0.5 - h / 2 + h * 0.24, w, h];
+      }
       const [cx, cy] = CENTERS[i];
       const box = SHAPES[i].box;
       const w = a < 1 ? Math.max(PLACES[i].zoom * 0.6, (box[2] - box[0]) * 1.3) : PLACES[i].zoom;
@@ -114,15 +107,9 @@ export default function WorldPresence() {
     const apply = () => {
       const vb = [cam.x, cam.y, cam.w, cam.h];
       svg.setAttribute('viewBox', vb.map((v) => v.toFixed(3)).join(' '));
-      // keep the dot grid the same size on screen whatever the zoom
-      if (dots && dot) {
-        const s = (cam.w / Math.max(1, stage.clientWidth)) * 5.5;
-        dots.setAttribute('width', s.toFixed(4));
-        dots.setAttribute('height', s.toFixed(4));
-        dot.setAttribute('cx', (s / 2).toFixed(4));
-        dot.setAttribute('cy', (s / 2).toFixed(4));
-        dot.setAttribute('r', (s * 0.26).toFixed(4));
-      }
+      // finale markers keep the same size on screen
+      const unit = cam.w / Math.max(1, stage.clientWidth);
+      markers.forEach((m) => m.setAttribute('transform', `translate(${m.dataset.x} ${m.dataset.y}) scale(${unit.toFixed(5)})`));
       if (routes) routes.style.opacity = Math.max(0, Math.min(1, (cam.w - 140) / 420)).toFixed(3);
       if (plane) {
         if (planeState.i >= 0 && planeState.t > 0.001 && planeState.t < 0.999) {
@@ -133,7 +120,7 @@ export default function WorldPresence() {
           plane.style.opacity = '1';
         } else plane.style.opacity = '0';
       }
-      if (pin) {
+      if (pin && stepRef.current < PLACES.length) {
         const i = Math.max(0, stepRef.current);
         const [sx, sy] = toScreen(CENTERS[i][0], CENTERS[i][1], vb, stage.clientWidth, stage.clientHeight);
         pin.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
@@ -161,7 +148,7 @@ export default function WorldPresence() {
       if (i !== stepRef.current) {
         stepRef.current = i;
         setStep(i);
-        const btn = tabs?.children[Math.max(0, i)] as HTMLElement | undefined;
+        const btn = tabs?.children[Math.max(0, Math.min(i, tabs.children.length - 1))] as HTMLElement | undefined;
         if (tabs && btn && tabs.scrollWidth > tabs.clientWidth) tabs.scrollTo({ left: btn.offsetLeft - (tabs.clientWidth - btn.offsetWidth) / 2, behavior: 'smooth' });
       }
     };
@@ -178,7 +165,7 @@ export default function WorldPresence() {
         setIntro(false);
         setCam(camAt(0));
         nav.current = (i) => {
-          countries.forEach((c, k) => gsap.set(c, { autoAlpha: k === i ? 1 : 0 }));
+          countries.forEach((c, k) => gsap.set(c, { autoAlpha: k === i || i >= PLACES.length ? 1 : 0 }));
           show(i);
           setCam(camAt(i));
         };
@@ -225,6 +212,13 @@ export default function WorldPresence() {
           arrivals.push(mt.duration());
           mt.to({}, { duration: 1.6 });
         }
+
+        // finale: pull back to the whole world with every country lit
+        const fin = mt.duration();
+        mt.to(cam, { x: () => camAt(PLACES.length)[0], y: () => camAt(PLACES.length)[1], w: () => camAt(PLACES.length)[2], h: () => camAt(PLACES.length)[3], duration: 2, ease: 'sine.inOut', onUpdate: mark }, fin);
+        mt.to(countries.slice(0, -1), { autoAlpha: 1, scale: 1, duration: 0.8, ease: 'back.out(1.4)', stagger: 0.15 }, fin + 0.9);
+        arrivals.push(mt.duration());
+        mt.to({}, { duration: 1.8 });
 
         const st = ScrollTrigger.create({
           trigger: root,
@@ -302,16 +296,8 @@ export default function WorldPresence() {
       <style>{CSS}</style>
       <div className="wp-stage">
         <svg className="wp-map" viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <pattern id="wp-dots" patternUnits="userSpaceOnUse" width="4" height="4">
-              <circle cx="2" cy="2" r="1" />
-            </pattern>
-          </defs>
-          <path className="wp-grat" d={GRATICULE} />
           <path className="wp-land" d={LAND} />
           <path className="wp-land" d={LAND_DETAIL} />
-          <path className="wp-land-dots" d={LAND} />
-          <path className="wp-land-dots" d={LAND_DETAIL} />
           {SHAPES.map((s, i) => (
             <path key={PLACES[i].id} className={'wp-ghost' + (i === step ? ' is-on' : '')} d={s.d} />
           ))}
@@ -331,9 +317,17 @@ export default function WorldPresence() {
             </g>
           ))}
           <circle className="wp-plane" r="1" />
+          <g className={'wp-markers' + (step === PLACES.length ? ' is-on' : '')}>
+            {CENTERS.map(([x, y], i) => (
+              <g key={'m' + i} className="wp-marker" data-x={x.toFixed(2)} data-y={y.toFixed(2)}>
+                <circle className="wp-marker-ring" r="14" />
+                <circle className="wp-marker-dot" r="4.5" />
+              </g>
+            ))}
+          </g>
         </svg>
 
-        <div className="wp-pin" aria-hidden="true" style={{ opacity: step >= 0 ? 1 : 0 }}>
+        <div className="wp-pin" aria-hidden="true" style={{ opacity: step >= 0 && step < PLACES.length ? 1 : 0 }}>
           <i />
           <i />
           <b />
@@ -362,6 +356,33 @@ export default function WorldPresence() {
               <span className="wp-tab-name">{tr(p.name, language)}</span>
             </button>
           ))}
+          <button
+            type="button"
+            role="tab"
+            aria-selected={step === PLACES.length}
+            className={step === PLACES.length ? 'is-on' : undefined}
+            onClick={() => nav.current?.(PLACES.length)}
+          >
+            <Globe2 size={14} aria-hidden="true" />
+            <span className="wp-tab-name">{tr(WORLD_TEXT.overview, language)}</span>
+          </button>
+        </div>
+
+        {/* finale: the whole world */}
+        <div className={'wp-outro' + (step === PLACES.length ? ' is-on' : '')} aria-hidden={step !== PLACES.length}>
+          <p className="wp-kicker">// {tr(WORLD_TEXT.kicker, language)}</p>
+          <h2>{tr(WORLD_TEXT.outroTitle, language)}</h2>
+          <ul>
+            {PLACES.map((p) => (
+              <li key={p.id}>
+                <span aria-hidden="true">{p.flag}</span> {tr(p.name, language)}
+              </li>
+            ))}
+          </ul>
+          <Link to="/contact" className="wp-cta" tabIndex={step === PLACES.length ? 0 : -1}>
+            {tr(WORLD_TEXT.cta, language)}
+            <ArrowRight size={16} aria-hidden="true" />
+          </Link>
         </div>
 
         {/* captions */}
@@ -406,13 +427,10 @@ export default function WorldPresence() {
 }
 
 const CSS = `
-.wp-root{position:relative;height:calc(100svh * (var(--steps) * 2 + 2));background:hsl(var(--bg-dark));border-top:1px solid hsl(0 0% 88% / .08)}
+.wp-root{position:relative;height:calc(100svh * (var(--steps) * 2 + 4));background:hsl(var(--bg-dark));border-top:1px solid hsl(0 0% 88% / .08)}
 .wp-stage{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden;font-family:Inter,system-ui,sans-serif}
 .wp-map{position:absolute;inset:0;width:100%;height:100%;max-width:none}
-.wp-grat{fill:none;stroke:hsl(0 0% 88% / .05);stroke-width:1;vector-effect:non-scaling-stroke}
-.wp-land{fill:#121313;stroke:hsl(0 0% 88% / .14);stroke-width:.7;vector-effect:non-scaling-stroke;stroke-linejoin:round}
-.wp-land-dots{fill:url(#wp-dots)}
-#wp-dots circle{fill:hsl(0 0% 88% / .34)}
+.wp-land{fill:#1c1d1d;stroke:hsl(0 0% 88% / .16);stroke-width:.7;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .wp-ghost{fill:hsl(var(--accent-teal));opacity:.35;transition:opacity .5s}
 .wp-ghost.is-on{opacity:0}
 .wp-arc{fill:none;stroke:hsl(var(--accent-teal) / .22);stroke-width:1;stroke-dasharray:3 5;vector-effect:non-scaling-stroke}
@@ -422,6 +440,11 @@ const CSS = `
 .wp-halo{fill:none;stroke:hsl(var(--accent-teal));stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .wp-halo-1{stroke-width:26px;opacity:.10}
 .wp-halo-2{stroke-width:10px;opacity:.22}
+.wp-markers{opacity:0;transition:opacity .6s}
+.wp-markers.is-on{opacity:1}
+.wp-marker-ring{fill:hsl(var(--accent-teal) / .18);stroke:hsl(var(--accent-teal));stroke-width:1.5;animation:wp-mark 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.wp-marker-dot{fill:#fff;stroke:hsl(var(--accent-teal));stroke-width:2}
+@keyframes wp-mark{0%,100%{transform:scale(.8);opacity:.9}50%{transform:scale(1.15);opacity:.5}}
 .wp-plane{fill:#fff;opacity:0;filter:drop-shadow(0 0 4px hsl(var(--accent-teal)))}
 .wp-pin{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;transition:opacity .5s;z-index:2}
 .wp-pin i{position:absolute;left:-56px;top:-56px;width:112px;height:112px;border-radius:50%;border:1.5px solid hsl(var(--accent-teal));animation:wp-ping 2.8s cubic-bezier(.2,.6,.3,1) infinite}
@@ -443,6 +466,12 @@ const CSS = `
 .wp-tabs button:hover{color:hsl(var(--silver))}
 .wp-tabs button.is-on{background:hsl(var(--accent-teal));color:hsl(var(--bg-dark))}
 .wp-tabs button:focus-visible{outline:2px solid hsl(var(--accent-teal));outline-offset:2px}
+.wp-outro{position:absolute;z-index:3;left:16px;right:16px;bottom:clamp(28px,7vh,72px);text-align:center;opacity:0;transform:translateY(24px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.wp-outro.is-on{opacity:1;transform:none;pointer-events:auto}
+.wp-outro h2{margin:12px auto 16px;max-width:18ch;font-size:clamp(32px,4.6vw,68px);font-weight:800;line-height:1;letter-spacing:-.04em;color:hsl(var(--silver))}
+.wp-outro ul{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.wp-outro li{padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600;color:hsl(var(--silver));background:hsl(var(--accent-teal) / .12);border:1px solid hsl(var(--accent-teal) / .4)}
+.wp-tabs button svg{opacity:.8}
 .wp-tab-num{font-family:ui-monospace,monospace;font-size:10px;opacity:.7}
 .wp-cap{position:absolute;z-index:3;left:clamp(16px,5vw,80px);right:16px;bottom:clamp(28px,7vh,72px);max-width:520px;visibility:hidden;transition:visibility 0s .6s}
 .wp-cap.is-on{visibility:visible;transition:none}
@@ -480,6 +509,6 @@ const CSS = `
 @media (prefers-reduced-motion: reduce){
   .wp-root{height:auto}
   .wp-stage{position:relative}
-  .wp-pin i{animation:none}
+  .wp-pin i,.wp-marker-ring{animation:none}
 }
 `;

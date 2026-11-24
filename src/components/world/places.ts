@@ -101,5 +101,7 @@ export const WORLD_TEXT = {
   ),
   localTime: l('Heure locale', 'Local time', 'Hora local', 'Ortszeit', 'Ħin lokali'),
   cta: l('Lancer un projet ici', 'Start a project here', 'Empezar un proyecto aquí', 'Hier ein Projekt starten', 'Ibda proġett hawn'),
+  overview: l('Vue d\'ensemble', 'Overview', 'Vista general', 'Überblick', 'Ħarsa ġenerali'),
+  outroTitle: l('Quatre pays, un même savoir-faire.', 'Four countries, one craft.', 'Cuatro países, un mismo saber hacer.', 'Vier Länder, ein Handwerk.', 'Erba\' pajjiżi, l-istess sengħa.'),
   places: l('Nos destinations', 'Our locations', 'Nuestros destinos', 'Unsere Standorte', 'Il-postijiet tagħna'),
 };
