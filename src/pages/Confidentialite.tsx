@@ -13,7 +13,7 @@ const Confidentialite = () => {
             Politique de Confidentialité
           </h1>
           <p className="font-medium mb-8" style={{ color: 'hsl(var(--silver) / 0.6)' }}>LocalWeb Partners</p>
-          <p className="text-sm mb-12" style={{ color: 'hsl(var(--silver) / 0.4)' }}>Dernière mise à jour : 1er février 2026</p>
+          <p className="text-sm mb-12" style={{ color: 'hsl(var(--silver) / 0.4)' }}>Dernière mise à jour : 24 novembre 2026</p>
 
           <p className="leading-relaxed mb-8" style={{ color: 'hsl(var(--silver) / 0.7)' }}>
             Conformément au Règlement Général sur la Protection des Données (RGPD - UE 2016/679) et à la Loi Informatique et Libertés modifiée, LocalWeb Partners s'engage à protéger vos données personnelles.
@@ -63,7 +63,7 @@ const Confidentialite = () => {
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>5. Destinataires des données</h2>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li>Équipe interne LocalWeb Partners (web designer, business developer)</li>
-                <li>Hébergeur tiers (Lovable/Supabase) sous contrat DPA RGPD</li>
+                <li>Hébergeur du site (Vercel Inc.), encadré par un accord de traitement des données (DPA) conforme au RGPD</li>
               </ul>
               <p className="mt-3 font-medium">Aucun transfert hors UE.</p>
             </section>

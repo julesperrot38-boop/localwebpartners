@@ -14,27 +14,28 @@ const MentionsLegales = () => {
             Mentions Légales
           </h1>
           <p className="font-medium mb-8" style={{ color: 'hsl(var(--silver) / 0.6)' }}>LocalWeb Partners</p>
-          <p className="text-sm mb-12" style={{ color: 'hsl(var(--silver) / 0.4)' }}>Dernière mise à jour : 18 février 2026</p>
+          <p className="text-sm mb-12" style={{ color: 'hsl(var(--silver) / 0.4)' }}>Dernière mise à jour : 24 novembre 2026</p>
 
           <div className="space-y-8 leading-relaxed" style={{ color: 'hsl(var(--silver) / 0.7)' }}>
             <section>
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>Éditeur du site</h2>
-              <p className="mb-3"><strong>Local Web Partners</strong> est une enseigne exploitée par deux entrepreneurs indépendants :</p>
+              <p className="mb-3"><strong>Local Web Partners</strong> est une enseigne exploitée par un entrepreneur indépendant :</p>
               <ul className="list-disc list-inside space-y-1 ml-4 mb-3">
                 <li>Jules Perrot, web designer — SIRET : 10139190200018</li>
-                <li>Jean Samuel Chassany, business developer et sales manager — SIRET : 10137242300018</li>
               </ul>
               <p>Contact : <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a></p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>Hébergement</h2>
-              <p>Le site est hébergé par <strong>Lovable</strong>.</p>
+              <p className="mb-2">Le site est hébergé par <strong>Vercel Inc.</strong></p>
+              <p>440 N Barranca Ave #4133, Covina, CA 91723, États-Unis</p>
+              <p>Site web : <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">vercel.com</a></p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>Directeur de la publication</h2>
-              <p>Jules Perrot et Jean Samuel Chassany, en tant qu'exploitants indépendants de l'enseigne Local Web Partners.</p>
+              <p>Jules Perrot, en tant qu'exploitant indépendant de l'enseigne Local Web Partners.</p>
             </section>
 
             <section>
