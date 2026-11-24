@@ -7,7 +7,6 @@ import SEOHead from '@/components/SEOHead';
 import { useTranslation } from '@/contexts/LanguageContext';
 const webDesignerAsset = { url: '/images/web-designer.webp' };
 const webDesignerPhoto = webDesignerAsset.url;
-import businessDevPhoto from '@/assets/business-developer.png';
 
 
 const fadeUp = {
@@ -162,20 +161,6 @@ const Contact = () => {
                         <h3 className="font-semibold mb-1" style={{ color: 'hsl(var(--silver))' }}>{t('contact', 'webDesigner')}</h3>
                         <a href="tel:+33671002119" onClick={(e) => e.stopPropagation()} className="transition-colors hover:text-[hsl(168,58%,45%)]" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
                           +33 6 71 00 21 19
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                </a>
-
-                <a href="/equipe#jean-samuel-chassany" className="block">
-                  <article className="dark-card rounded-xl p-6 cursor-pointer">
-                    <div className="flex items-start gap-4">
-                      <img src={businessDevPhoto} alt="Jean-Samuel Chassany" className="w-14 h-14 rounded-full object-cover" loading="lazy" width="56" height="56" />
-                      <div>
-                        <h3 className="font-semibold mb-1" style={{ color: 'hsl(var(--silver))' }}>{t('contact', 'businessDev')}</h3>
-                        <a href="tel:+33765279248" onClick={(e) => e.stopPropagation()} className="transition-colors hover:text-[hsl(168,58%,45%)]" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
-                          +33 7 65 27 92 48
                         </a>
                       </div>
                     </div>

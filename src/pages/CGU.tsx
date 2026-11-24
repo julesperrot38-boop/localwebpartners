@@ -27,7 +27,6 @@ const CGU = () => {
                 <p><strong>LocalWeb Partners</strong></p>
                 <p>Contact : <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a></p>
                 <p>Web Designer : <a href="tel:+33671002119" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">+33 6 71 00 21 19</a></p>
-                <p>Business Developer : <a href="tel:+33765279248" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">+33 7 65 27 92 48</a></p>
                 <p>Instagram : <a href="https://www.instagram.com/localwebpartners" target="_blank" rel="noopener noreferrer" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">@localwebpartners</a></p>
               </div>
               <p className="mt-3">Le Site est hébergé par un prestataire tiers conforme RGPD.</p>

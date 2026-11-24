@@ -69,12 +69,6 @@ const Footer = () => {
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
-                <Phone size={16} style={{ color: 'hsl(var(--accent-teal))' }} aria-hidden="true" />
-                <a href="tel:+33765279248" className="hover:text-[hsl(168,58%,45%)] transition-colors">
-                  +33 7 65 27 92 48 - {t('footer', 'businessDev')}
-                </a>
-              </li>
-              <li className="flex items-center gap-2 text-sm" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
                 <Instagram size={16} style={{ color: 'hsl(var(--accent-teal))' }} aria-hidden="true" />
                 <a 
                   href="https://www.instagram.com/localwebpartners" 

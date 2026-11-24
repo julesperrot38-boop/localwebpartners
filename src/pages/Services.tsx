@@ -24,7 +24,7 @@ const reveal = {
   viewport: { once: true, margin: '-60px' },
 };
 
-const CALENDLY_URL = 'https://calendly.com/localwebpartners-jeansamuel/30min';
+const CALENDLY_URL = 'https://calendly.com/contact-localwebpartners/30min';
 
 const Services = () => {
   const { language } = useTranslation();

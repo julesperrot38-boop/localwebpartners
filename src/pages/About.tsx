@@ -7,7 +7,6 @@ import {
 import { motion } from 'framer-motion';
 const webDesignerAsset = { url: '/images/web-designer.webp' };
 const webDesignerPhoto = webDesignerAsset.url;
-import businessDevPhoto from '@/assets/business-developer.png';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
@@ -24,7 +23,7 @@ const About = () => {
 
   const openCalendlyPopup = () => {
     if (window.Calendly) {
-      window.Calendly.initPopupWidget({ url: 'https://calendly.com/localwebpartners-jeansamuel/30min' });
+      window.Calendly.initPopupWidget({ url: 'https://calendly.com/contact-localwebpartners/30min' });
     }
   };
 
@@ -32,19 +31,17 @@ const About = () => {
     {
       name: 'Jules Perrot',
       role: t('team', 'webDesigner'),
-      description: t('team', 'webDesignerDesc'),
+      description: t('team', 'julesDesc'),
       photo: webDesignerPhoto,
       phone: '+33 6 71 00 21 19',
-      skills: [t('team', 'uiuxDesign'), t('team', 'webDevelopment'), t('team', 'responsiveDesign'), t('team', 'seoOptimization')],
-      hasCalendly: false,
-    },
-    {
-      name: 'Jean-Samuel Chassany',
-      role: t('team', 'businessDev'),
-      description: t('team', 'businessDevDesc'),
-      photo: businessDevPhoto,
-      phone: '+33 7 65 27 92 48',
-      skills: [t('team', 'customerRelations'), t('team', 'marketingStrategy'), t('team', 'needsAnalysis'), t('team', 'projectFollowUp')],
+      skills: [
+        t('team', 'uiuxDesign'),
+        t('team', 'webDevelopment'),
+        t('team', 'responsiveDesign'),
+        t('team', 'seoOptimization'),
+        t('team', 'customerRelations'),
+        t('team', 'projectFollowUp'),
+      ],
       hasCalendly: true,
     },
   ];
@@ -66,7 +63,7 @@ const About = () => {
     <div className="min-h-screen" style={{ background: 'hsl(var(--bg-dark))' }}>
       <SEOHead 
         title="Équipe LocalWeb Partners - Experts Création Site Web"
-        description="Rencontrez l'équipe LocalWeb Partners : Jules Perrot et Jean-Samuel Chassany. Experts en création sites web entreprises locales."
+        description="Rencontrez Jules Perrot, fondateur de LocalWeb Partners : design, développement, relation client et suivi de votre projet de site web."
         keywords="équipe agence web, web designer français, business developer, création site web"
         canonicalUrl="https://localwebpartners.fr/equipe"
       />
@@ -86,7 +83,7 @@ const About = () => {
       {/* Team */}
       <main className="py-20" style={{ background: 'hsl(var(--bg-section))', borderTop: '1px solid hsl(0 0% 88% / 0.08)' }}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid gap-8 max-w-xl mx-auto">
             {team.map((member, index) => (
               <motion.article
                 key={index}

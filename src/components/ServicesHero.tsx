@@ -229,7 +229,7 @@ const ServicesHero = () => {
               interval={4}
               background="#000000"
               glow="#000000"
-              warp={0.6}
+              warp={0}
               ariaLabel={tr(TEXT.carousel, language)}
               onIndexChange={setActive}
               style={{ minHeight: 360, background: "transparent" }}
