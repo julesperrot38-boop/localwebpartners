@@ -37,7 +37,7 @@ const Contact = () => {
     const body = encodeURIComponent(
       `Nom: ${formData.name}\nEmail: ${formData.email}\nTéléphone: ${formData.phone}\nEntreprise: ${formData.company}\nService demandé: ${formData.service}\n\nMessage:\n${formData.message}`
     );
-    window.location.href = `mailto:contact.localwebpartners@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info.localwebpartners@gmail.com?subject=${subject}&body=${body}`;
     setIsSubmitted(true);
   };
 
@@ -146,8 +146,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1" style={{ color: 'hsl(var(--silver))' }}>Email</h3>
-                      <a href="mailto:contact.localwebpartners@gmail.com" className="transition-colors hover:text-[hsl(168,58%,45%)]" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
-                        contact.localwebpartners@gmail.com
+                      <a href="mailto:info.localwebpartners@gmail.com" className="transition-colors hover:text-[hsl(168,58%,45%)]" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
+                        info.localwebpartners@gmail.com
                       </a>
                     </div>
                   </div>

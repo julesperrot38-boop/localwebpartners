@@ -77,7 +77,7 @@ const Navbar = () => {
               {t('nav', 'freeQuote')}
             </Link>
             <a
-              href="mailto:contact.localwebpartners@gmail.com"
+              href="mailto:info.localwebpartners@gmail.com"
               className="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
               style={{ background: 'hsl(var(--accent-teal) / 0.15)' }}
               aria-label={t('common', 'sendEmail')}

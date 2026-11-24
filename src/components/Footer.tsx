@@ -58,8 +58,8 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm" style={{ color: 'hsl(var(--silver) / 0.5)' }}>
                 <Mail size={16} style={{ color: 'hsl(var(--accent-teal))' }} aria-hidden="true" />
-                <a href="mailto:contact.localwebpartners@gmail.com" className="hover:text-[hsl(168,58%,45%)] transition-colors">
-                  contact.localwebpartners@gmail.com
+                <a href="mailto:info.localwebpartners@gmail.com" className="hover:text-[hsl(168,58%,45%)] transition-colors">
+                  info.localwebpartners@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm" style={{ color: 'hsl(var(--silver) / 0.5)' }}>

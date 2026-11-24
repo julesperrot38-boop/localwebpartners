@@ -24,7 +24,7 @@ const MentionsLegales = () => {
                 <li>Jules Perrot, web designer — SIRET : 10139190200018</li>
                 <li>Jean Samuel Chassany, business developer et sales manager — SIRET : 10137242300018</li>
               </ul>
-              <p>Contact : <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a></p>
+              <p>Contact : <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a></p>
             </section>
 
             <section>
@@ -46,7 +46,7 @@ const MentionsLegales = () => {
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>Données personnelles (RGPD)</h2>
               <p className="mb-3">Conformément au Règlement Général sur la Protection des Données (RGPD - UE 2016/679), nous collectons et traitons vos données personnelles de manière sécurisée et limitée à la fourniture de nos services.</p>
               <p className="mb-3">Vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition aux traitements de vos données. Pour exercer ces droits, contactez-nous à{' '}
-                <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a>.
+                <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a>.
               </p>
               <p>Aucune donnée n'est transmise à des tiers sans votre consentement explicite. Consultez notre{' '}
                 <Link to="/confidentialite" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">Politique de Confidentialité</Link>{' '}

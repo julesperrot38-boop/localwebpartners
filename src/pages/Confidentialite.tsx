@@ -24,11 +24,11 @@ const Confidentialite = () => {
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>1. Responsable du traitement</h2>
               <div className="dark-card rounded-lg p-4 space-y-2">
                 <p><strong>LocalWeb Partners</strong></p>
-                <p>Contact : <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a></p>
+                <p>Contact : <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a></p>
                 <p>Web Designer : <a href="tel:+33671002119" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">+33 6 71 00 21 19</a></p>
                 <p>Instagram : <a href="https://www.instagram.com/localwebpartners" target="_blank" rel="noopener noreferrer" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">@localwebpartners</a></p>
               </div>
-              <p className="mt-3">Délégué à la Protection des Données (DPO) : <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a></p>
+              <p className="mt-3">Délégué à la Protection des Données (DPO) : <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a></p>
             </section>
 
             <section>
@@ -72,7 +72,7 @@ const Confidentialite = () => {
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>6. Vos droits RGPD</h2>
               <p className="mb-3">
                 Exercez vos droits (accès, rectification, opposition, portabilité, oubli) via{' '}
-                <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a> :
+                <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a> :
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li>Réponse sous 1 mois (prolongeable 2 mois)</li>

@@ -25,7 +25,7 @@ const CGU = () => {
               <h2 className="text-xl font-semibold mb-3" style={{ color: 'hsl(var(--silver))' }}>2. Éditeur du Site</h2>
               <div className="dark-card rounded-lg p-4 space-y-2">
                 <p><strong>LocalWeb Partners</strong></p>
-                <p>Contact : <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a></p>
+                <p>Contact : <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a></p>
                 <p>Web Designer : <a href="tel:+33671002119" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">+33 6 71 00 21 19</a></p>
                 <p>Instagram : <a href="https://www.instagram.com/localwebpartners" target="_blank" rel="noopener noreferrer" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">@localwebpartners</a></p>
               </div>
@@ -60,7 +60,7 @@ const CGU = () => {
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li><strong>Finalité :</strong> Gestion demandes devis/contact</li>
                 <li><strong>Conservation :</strong> 3 ans max</li>
-                <li><strong>Droits :</strong> Accès, rectification, suppression via <a href="mailto:contact.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">contact.localwebpartners@gmail.com</a></li>
+                <li><strong>Droits :</strong> Accès, rectification, suppression via <a href="mailto:info.localwebpartners@gmail.com" style={{ color: 'hsl(var(--accent-teal))' }} className="hover:underline">info.localwebpartners@gmail.com</a></li>
               </ul>
               <p className="mt-3">Politique de confidentialité dédiée disponible.</p>
             </section>

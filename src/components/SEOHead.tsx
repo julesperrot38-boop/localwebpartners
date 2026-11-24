@@ -75,7 +75,7 @@ const SEOHead = ({
         "description": "Création sites web entreprises locales - Agence web basée à Nantes, France",
         "url": "https://localwebpartners.fr",
         "telephone": "+33671002119",
-        "email": "contact.localwebpartners@gmail.com",
+        "email": "info.localwebpartners@gmail.com",
         "logo": "https://localwebpartners.fr/logo-localweb.png",
         "image": "https://localwebpartners.fr/og-image.png",
         "address": {
